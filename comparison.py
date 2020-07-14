@@ -35,31 +35,52 @@ neighbor = neighbor_filter.nf(img, (3, 3))
 
 # plot the restored images
 plt.figure()
-res=[]
-res.extend((img,noise_img,nl,gauss,anisoid,neighbor))
-pos=[x for x in range(231,231+len(res))]
+res = []
+res.extend((img, noise_img, nl, gauss, anisoid, neighbor))
+pos = [x for x in range(231, 231 + len(res))]
 for i in range(len(res)):
     plt.subplot(pos[i])
-    plt.imshow(res[i],'gray')
+    plt.imshow(res[i], 'gray')
     plt.axis('off')
 plt.show()
 
 # plot the method noise
 plt.figure()
-res1=[]
-res1.extend((img,noise_img,img-nl,img-gauss,img-anisoid,img-neighbor))
+res1 = []
+res1.extend((img, noise_img, img - nl, img - gauss, img - anisoid, img - neighbor))
 for i in range(len(res)):
     plt.subplot(pos[i])
-    plt.imshow(res1[i],'gray')
+    plt.imshow(res1[i], 'gray')
     plt.axis('off')
 plt.show()
 
 # calculate MSE for every approach
-plt.figure()
+
+
+def autolabel(rects, ax, xpos='center'):
+    """
+    Attach a text label above each bar in *rects*, displaying its height.
+    *xpos* indicates which side to place the text w.r.t. the center of
+    the bar. It can be one of the following {'center', 'right', 'left'}.
+    """
+
+    xpos = xpos.lower()  # normalize the case of the parameter
+    ha = {'center': 'center', 'right': 'left', 'left': 'right'}
+    offset = {'center': 0.5, 'right': 0.55, 'left': 0.45}  # x_txt = x + w*off
+
+    for rect in rects:
+        height = rect.get_height()
+        ax.text(rect.get_x() + rect.get_width() * offset[xpos], 1.01 * height,
+                '{:.2f}'.format(height), ha=ha[xpos], va='bottom', fontdict={"fontsize": 14})
+
+
+fig, ax = plt.subplots()
 x = ["NLM", "GF", "AF", "NF"]
 y = list(map(lambda t: np.sum(np.square(img - t)), [nl, gauss, anisoid, neighbor]))
 for i in range(4):
     print(f"{x[i]}: {y[i]}")
-plt.bar(range(4), y, width=0.4)
+rects = ax.bar(range(4), y, width=0.4)
+autolabel(rects, ax, "center")
 plt.xticks(range(4), x)
+plt.yticks(range(0, 70, 10))
 plt.show()

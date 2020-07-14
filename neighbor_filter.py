@@ -8,5 +8,5 @@
 import cv2
 
 
-def nf(img,shape=(3,3)):
-    return cv2.blur(img,shape)
+def nf(img, shape=(3, 3)):
+    return cv2.blur(img, shape)

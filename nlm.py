@@ -8,6 +8,7 @@
 import numpy as np
 import cv2
 
+
 # from skimage.util import random_noise
 
 
@@ -15,7 +16,6 @@ def nlm(img, h, R=10, r=3, f=False):
     # f: whether add a Gaussian kernel to the Euclidean distance or not
     size_x = img.shape[0]
     size = size_x ** 2
-
 
     # the denoised image
     nl = np.zeros(size)
