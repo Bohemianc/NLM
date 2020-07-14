@@ -23,7 +23,7 @@ img = img / 255.0
 
 # add a gaussian white noise
 # sigma_noise is the standard deviation
-sigma_noise = 0.03
+sigma_noise = 0.025
 noise = sigma_noise * np.random.randn(img.shape[0], img.shape[1])
 noise_img = img + noise
 # noise_img=random_noise(img, mode='gaussian', seed=None, clip=True, var=sigma_noise**2)
@@ -71,16 +71,17 @@ def autolabel(rects, ax, xpos='center'):
     for rect in rects:
         height = rect.get_height()
         ax.text(rect.get_x() + rect.get_width() * offset[xpos], 1.01 * height,
-                '{:.2f}'.format(height), ha=ha[xpos], va='bottom', fontdict={"fontsize": 16})
+                '{:.1e}'.format(height), ha=ha[xpos], va='bottom', fontdict={"fontsize": 16})
 
 
 fig, ax = plt.subplots()
 x = ["NLM", "GF", "AF", "NF"]
-y = list(map(lambda t: np.sum(np.square(img - t)), [nl, gauss, anisoid, neighbor]))
+y = list(map(lambda t: np.sum(np.square(img - t))/IMG_SIZE, [nl, gauss, anisoid, neighbor]))
 for i in range(4):
     print(f"{x[i]}: {y[i]}")
 rects = ax.bar(range(4), y, width=0.4)
 autolabel(rects, ax, "center")
 plt.xticks(range(4), x)
-plt.yticks(range(0, 60, 10))
+# plt.yticks(range(0, 60, 10))
+plt.yticks(np.arange(0, 60*1e-4, 10*1e-4))
 plt.show()
