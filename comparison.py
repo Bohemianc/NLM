@@ -71,7 +71,7 @@ def autolabel(rects, ax, xpos='center'):
     for rect in rects:
         height = rect.get_height()
         ax.text(rect.get_x() + rect.get_width() * offset[xpos], 1.01 * height,
-                '{:.2f}'.format(height), ha=ha[xpos], va='bottom', fontdict={"fontsize": 14})
+                '{:.2f}'.format(height), ha=ha[xpos], va='bottom', fontdict={"fontsize": 16})
 
 
 fig, ax = plt.subplots()
@@ -82,5 +82,5 @@ for i in range(4):
 rects = ax.bar(range(4), y, width=0.4)
 autolabel(rects, ax, "center")
 plt.xticks(range(4), x)
-plt.yticks(range(0, 70, 10))
+plt.yticks(range(0, 60, 10))
 plt.show()

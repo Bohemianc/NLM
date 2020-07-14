@@ -93,4 +93,5 @@ class anisodiff2D(object):
 
 
 def af(img):
-    return anisodiff2D().fit(img)
+    # return anisodiff2D().fit(img)
+    return cv2.bilateralFilter(np.uint8(img*255), 3, 100, 100)/255
